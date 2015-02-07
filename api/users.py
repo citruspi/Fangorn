@@ -19,8 +19,8 @@ class RegistrationResource(Resource):
 
         firstname = firstname.encode('utf-8')
         lastname = lastname.encode('utf-8')
-        username = username.encode('utf-8')
-        email = email.encode('utf-8')
+        username = username.encode('utf-8').lower()
+        email = email.encode('utf-8').lower()
         password = password.encode('utf-8')
 
         if User.select().where(User.username == username).count() == 1:
