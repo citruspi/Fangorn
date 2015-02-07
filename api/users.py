@@ -6,16 +6,22 @@ class RegistrationResource(Resource):
 
     def post(self):
 
-        firstname = request.form.get('firstname').encode('utf-8')
-        lastname = request.form.get('lastname').encode('utf-8')
-        username = request.form.get('username').encode('utf-8')
-        email = request.form.get('email').encode('utf-8')
-        password = request.form.get('password').encode('utf-8')
+        firstname = request.form.get('firstname')
+        lastname = request.form.get('lastname')
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('password')
 
         if (not firstname or not lastname or not username or not email or not
                 password):
 
             abort(400)
+
+        firstname = firstname.encode('utf-8')
+        lastname = lastname.encode('utf-8')
+        username = username.encode('utf-8')
+        email = email.encode('utf-8')
+        password = password.encode('utf-8')
 
         if User.select().where(User.username == username).count() == 1:
 
