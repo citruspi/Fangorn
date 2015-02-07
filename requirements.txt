@@ -4,8 +4,11 @@ Jinja2==2.7.3
 MarkupSafe==0.23
 Werkzeug==0.10.1
 aniso8601==0.92
+bcrypt==1.1.0
+cffi==0.8.6
 itsdangerous==0.24
 peewee==2.4.7
+pycparser==2.10
 pytz==2014.10
 six==1.9.0
 wsgiref==0.1.2
