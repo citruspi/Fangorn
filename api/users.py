@@ -1,6 +1,7 @@
 from flask import request, abort, g
-from . import User, Resource
+from . import User, Token, Resource
 import bcrypt
+import os
 
 class RegistrationResource(Resource):
 
@@ -38,4 +39,11 @@ class RegistrationResource(Resource):
                 email = email,
                 password = password)
 
-        return user.serializeToJSON()
+        token = Token.create(
+                token = os.urandom(64).encode('hex'),
+                user = user)
+
+        response = user.serializeToJSON()
+        response['tokens'] = [token.token]
+
+        return response
