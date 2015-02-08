@@ -2,6 +2,7 @@ import datetime
 from peewee import *
 from . import database
 import os
+import bcrypt
 
 class User(Model):
 
@@ -10,6 +11,22 @@ class User(Model):
     username = CharField()
     email = CharField()
     password = CharField()
+
+    @staticmethod
+    def authenticate(username, password):
+
+        try:
+
+            user = User.get(User.username == username)
+            computed = user.password.encode('utf-8')
+
+            if bcrypt.hashpw(password, computed) == computed:
+                return True
+
+        except User.DoesNotExist:
+            pass
+
+        return False
 
     def serializeToJSON(self):
 

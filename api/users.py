@@ -10,22 +10,6 @@ class AuthenticationResource(Resource):
         username = request.form.get('username')
         password = request.form.get('password')
 
-        def verify (username, password):
-
-            try:
-
-                user = User.get(User.username == username)
-                computed = user.password.encode('utf-8')
-
-                if bcrypt.hashpw(password, computed) == computed:
-                    return True
-
-            except User.DoesNotExist:
-
-                pass
-
-            return False
-
         if not username or not password:
 
             abort(400)
@@ -33,7 +17,7 @@ class AuthenticationResource(Resource):
         username = username.encode('utf-8').lower()
         password = password.encode('utf-8')
 
-        if not verify(username, password):
+        if not User.authenticate(username, password):
 
             abort(401)
 
