@@ -79,6 +79,8 @@ class File(Model):
     description = TextField()
     size = IntegerField()
     kind = CharField()
+    bit = CharField()
+    filename = CharField()
     folder = ForeignKeyField(Folder, related_name='files')
 
     class Meta:
