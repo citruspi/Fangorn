@@ -52,3 +52,21 @@ class FolderInstance(AuthenticatedResource):
         except Folder.DoesNotExist:
 
             abort(404)
+
+    def delete(self, id):
+
+        try:
+
+            folder = Folder.get(Folder.id == id)
+
+            if folder.user != g.user:
+
+                abort(401)
+
+            folder.delete_instance()
+
+            return {'name': folder.name, 'id': folder.id}
+
+        except Folder.DoesNotExist:
+
+            abort(404)
