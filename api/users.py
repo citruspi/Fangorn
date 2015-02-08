@@ -3,6 +3,50 @@ from . import User, Token, Resource
 import bcrypt
 import os
 
+class AuthenticationResource(Resource):
+
+    def post(self):
+
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        def verify (username, password):
+
+            try:
+
+                user = User.get(User.username == username)
+                computed = user.password.encode('utf-8')
+
+                if bcrypt.hashpw(password, computed) == computed:
+                    return True
+
+            except User.DoesNotExist:
+
+                pass
+
+            return False
+
+        if not username or not password:
+
+            abort(400)
+
+        username = username.encode('utf-8').lower()
+        password = password.encode('utf-8')
+
+        if not verify(username, password):
+
+            abort(401)
+
+        else:
+
+            user = User.get(User.username == username)
+
+            token = Token.create(
+                    token = Token.generateToken(),
+                    user = user)
+
+            return {'token': token.token}
+
 class RegistrationResource(Resource):
 
     def post(self):
