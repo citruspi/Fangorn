@@ -21,7 +21,7 @@ class RegistrationResource(Resource):
         lastname = lastname.encode('utf-8')
         username = username.encode('utf-8').lower()
         email = email.encode('utf-8').lower()
-        password = password.encode('utf-8')
+        password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
         if User.select().where(User.username == username).count() == 1:
 
@@ -36,6 +36,6 @@ class RegistrationResource(Resource):
                 lastname = lastname,
                 username = username,
                 email = email,
-                password = bcrypt.hashpw(password, bcrypt.gensalt()))
+                password = password)
 
         return user.serializeToJSON()
