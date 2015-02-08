@@ -38,10 +38,4 @@ class RegistrationResource(Resource):
                 email = email,
                 password = bcrypt.hashpw(password, bcrypt.gensalt()))
 
-        return {
-                'id': user.id,
-                'firstname': user.firstname,
-                'lastname': user.lastname,
-                'username': user.username,
-                'email': user.email
-               }
+        return user.serializeToJSON()

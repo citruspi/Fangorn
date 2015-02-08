@@ -10,6 +10,16 @@ class User(Model):
     email = CharField()
     password = CharField()
 
+    def serializeToJSON(self):
+
+        return {
+                'id': self.id,
+                'firstname': self.firstname,
+                'lastname': self.lastname,
+                'username': self.username,
+                'email': self.email,
+               }
+
     class Meta:
 
         database = database
