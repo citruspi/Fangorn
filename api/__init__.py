@@ -11,7 +11,9 @@ database.create_tables([User, Token, Folder, File], True)
 app = Flask(__name__)
 api = Api(app)
 
-from users import RegistrationResource, AuthenticationResource
+from users import RegistrationResource, AuthenticationResource, AuthenticatedResource
+from folders import FolderResource
 
 api.add_resource(RegistrationResource, '/users/')
 api.add_resource(AuthenticationResource, '/authenticate/')
+api.add_resource(FolderResource, '/folders/')
