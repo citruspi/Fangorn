@@ -34,3 +34,21 @@ class FolderResource(AuthenticatedResource):
         return {'folders': [{
                     'id': f.id,
                     'name': f.name} for f in g.user.folders]}
+
+class FolderInstance(AuthenticatedResource):
+
+    def get(self, id):
+
+        try:
+
+            folder = Folder.get(Folder.id == id)
+
+            if folder.user != g.user:
+
+                abort(401)
+
+            return {'name': folder.name, 'id': folder.id}
+
+        except Folder.DoesNotExist:
+
+            abort(404)
