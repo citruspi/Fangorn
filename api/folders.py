@@ -28,3 +28,9 @@ class FolderResource(AuthenticatedResource):
             return {'folders': [{
                         'id': f.id,
                         'name': f.name} for f in g.user.folders]}
+
+    def get(self):
+
+        return {'folders': [{
+                    'id': f.id,
+                    'name': f.name} for f in g.user.folders]}
