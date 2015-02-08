@@ -40,7 +40,7 @@ class RegistrationResource(Resource):
                 password = password)
 
         token = Token.create(
-                token = os.urandom(64).encode('hex'),
+                token = Token.generateToken(),
                 user = user)
 
         response = user.serializeToJSON()

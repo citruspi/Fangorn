@@ -1,6 +1,7 @@
 import datetime
 from peewee import *
 from . import database
+import os
 
 class User(Model):
 
@@ -28,6 +29,15 @@ class Token(Model):
 
     token = CharField()
     user = ForeignKeyField(User, related_name='tokens')
+
+    @staticmethod
+    def generateToken():
+
+        token = os.urandom(64).encode('hex')
+        while Token.select().where(Token.token == token).count() != 0:
+            token = os.urandom(64).encode('hex')
+
+        return token
 
     class Meta:
 
